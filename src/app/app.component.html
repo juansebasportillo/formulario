@@ -1,43 +1,65 @@
 <div class="container">
-  <!--<app-formulario></app-formulario>-->
-  <div class="card">
+    <div class="card">
 
-    <div class="card-body">
-
-        <form #formPost="ngForm" (ngSubmit)="onSubmit(formPost.value)">
-            <div class="mb-2">
-                <label class="form-label">
-                    Nombre:
-                </label>
-                <input type="text" name="nombre" class="form-control" ngModel placeholder="Ingrese un nombre" required> <!--[(ngModel)]="persona.nombre" -->
+        <div class="card-body">
+            <h1 class="titulo">Test skytel</h1><br>
+            <div *ngIf="message" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Enviado!</strong> correctamente.
+                <button (click)="removeMessage()" type="button" data-bs-dismiss="alert" aria-label="close"> x</button>
             </div>
+            <form #formPost="ngForm" (ngSubmit)="onSubmit(formPost.value)" id="reset">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label" for="nombre">
+                            Nombre:
+                        </label>
+                        <input required ngModel name="nombre" type="text" #nombre="ngModel" class="form-control" id="nombre" placeholder="Ingrese un nombre" >
+                        <div class="alert alert-danger" *ngIf="nombre.touched && !nombre.valid">
+                            <div *ngIf="nombre.errors && nombre.errors['required']">El Nombre es Requerido.</div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Apellido:
+                        </label>
+                        <input required ngModel name="apellido" type="text" #apellido="ngModel" class="form-control" id="apellido" placeholder="Ingrese un apellido">
+                        <div class="alert alert-danger" *ngIf="apellido.touched && !apellido.valid">
+                            <div *ngIf="apellido.errors && apellido.errors['required']">El Apellido es Requerido.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Teléfono:
+                        </label>
+                        <input type="number" name="telefono" class="form-control" ngModel placeholder="Ingrese un teléfono">
+                    </div>
     
-            <div class="mb-2">
-                <label class="form-label">
-                    Apellido:
-                </label>
-                <input type="text" name="apellido" class="form-control" ngModel placeholder="Ingrese un apellido" required> <!--[(ngModel)]="persona.apellido" -->
-            </div>
-
-            <div>
-                <label class="form-label">
-                    Teléfono:
-                </label>
-                <input type="number" name="telefono" class="form-control" ngModel placeholder="Ingrese un teléfono" required> <!--[(ngModel)]="persona.telefono" -->
-            </div>
-
-            <div class="mb-2">
-                <label class="form-label">
-                    Correo electrónico:
-                </label>
-                <input type="email" name="correo" class="form-control" ngModel placeholder="Ingrese un Correo electrónico" required> <!--[(ngModel)]="persona.correo" -->
-            </div>
-
-            <button type="submit" class="btn btn-primary mt-2">Enviar</button>
-        </form>
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Correo electrónico:
+                        </label> 
+                        <input required ngModel name="correo" type="email" #correo="ngModel" class="form-control" id="correo" placeholder="Ingrese un Correo electrónico">
+                        <div class="alert alert-danger" *ngIf="correo.touched && !correo.valid">
+                            <div *ngIf="correo.errors && correo.errors['required']">El Correo es Requerido.</div>
+                            <div *ngIf="correo.errors && correo.errors['email']">El correo electrónico debe ser una direccion de correo valida.</div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2" [class.disabled]="!formPost.valid">Enviar</button>
+            </form>
+        </div>
     </div>
-</div>
+</div> 
 
+<style>
+    .container{
+        padding-top: 50px;
+    }
 
-<!--{{persona | json}}-->
-</div>
+    .titulo{
+        text-align: center;
+    }
+</style>
